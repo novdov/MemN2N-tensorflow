@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import pprint
 import tensorflow as tf
@@ -6,6 +7,10 @@ from data import read_data
 from model import MemN2N
 
 pp = pprint.PrettyPrinter()
+
+now = datetime.now()
+date_fmt = '{:%m%d_%H%M}'.format(now)
+ckpt_dir = 'ckpt_{}'.format(date_fmt)
 
 flags = tf.app.flags
 
@@ -21,7 +26,7 @@ flags.DEFINE_float("init_hid", 0.1, "initial internal state value [0.1]")
 flags.DEFINE_float("init_std", 0.05, "weight initialization std [0.05]")
 flags.DEFINE_float("max_grad_norm", 50, "clip gradients to this norm [50]")
 flags.DEFINE_string("data_dir", "data", "data directory [data]")
-flags.DEFINE_string("checkpoint_dir", "checkpoints", "checkpoint directory [checkpoints]")
+flags.DEFINE_string("checkpoint_dir", ckpt_dir, "checkpoint directory [checkpoints]")
 flags.DEFINE_string("data_name", "ptb", "data set name [ptb]")
 flags.DEFINE_boolean("is_test", False, "True for testing, False for Training [False]")
 flags.DEFINE_boolean("show", False, "print progress [False]")
